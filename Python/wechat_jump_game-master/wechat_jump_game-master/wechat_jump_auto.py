@@ -35,7 +35,7 @@ except Exception as ex:
 VERSION = "1.1.1"
 
 # DEBUG 开关，需要调试的时候请改为 True，不需要调试的时候为 False
-DEBUG_SWITCH = False
+DEBUG_SWITCH = True
 
 
 # Magic Number，不设置可能无法正常执行，请根据具体截图从上到下按需

@@ -6,6 +6,11 @@ import operator
 from functools import reduce
 from PIL import Image
 
+wait_auto = 12
+wait_replay = 1
+
+max_money = 4000
+
 error     = -1
 start     =  0
 play      =  1
@@ -14,8 +19,7 @@ skip_all  =  3
 continued =  4
 replay    =  5
 
-wait_auto = 15
-wait_replay = 1
+
 
 replay_button   = (1450, 930, 1740, 1040)
 play_button     = (1320, 860, 1610,  970)
@@ -54,7 +58,8 @@ def is_eq(img1, img2):
     h1 = img1.histogram()
     h2 = img2.histogram()
     result = math.sqrt(reduce(operator.add, list(map(lambda a,b: (a-b)**2, h1, h2)))/len(h1) )
-    return result < 10.0
+    print(result)
+    return result < 30.0
 def is_replay(img):
     return is_eq(img_replay_button  , img.crop(replay_button))
 def is_play(img):
@@ -70,6 +75,7 @@ def is_continue(img):
 
 
 def main():
+    global wait_auto, wait_replay
     state = start
     times = 0
     money = 0
@@ -86,6 +92,10 @@ def main():
             # wait_replay = wait_replay
             print("第{}次用时{}s, 总用时:{}h {}min {}s, 总金币:{}".format(times, int(t_end-t_start), total_s//3600, (total_s//60)%60, total_s%60, money))
             t_start = time.time()
+            if money > max_money:
+                os.system("adb shell reboot -p")
+                os.system("shutdown -s -t 60")
+                sys.exit()
             print('等待点击"闯关"')
             while True:
                 img = screen_shot()

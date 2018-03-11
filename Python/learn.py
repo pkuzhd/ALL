@@ -1,13 +1,6 @@
-# import xlrd, xlwt
-
-
-# file = xlwt.Workbook()
-
-# sheet1 = file.add_sheet("cxy")
-
-# sheet1.write(0,0,1)
-
-# file.save("C:\\Users\\pkuzhd\\Desktop\\123.xls")
-
-# print(1, 2)
-
+d = dict()
+d['one']=1
+d['two']=2
+d['three']=3
+d['four']=4
+print(d)

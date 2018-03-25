@@ -15,4 +15,7 @@ while not aStack.isEmpty() or pointer:
 	else:
 		# 3号访问点 # No.3 visiting point
 		pointer = None
-		
+
+
+
+

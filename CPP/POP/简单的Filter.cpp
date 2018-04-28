@@ -1,8 +1,8 @@
 #include <iostream>
 #include <string>
 using namespace std;
-template <class T>
-T *Filter(T *begin, T *end, T *b, bool(*p)(T))
+template <class T, typename T2>
+T *Filter(T *begin, T *end, T *b, T2 p)
 {
 	T *j = b;
 	for (T *i = begin; i != end; ++i)

@@ -1,22 +1,15 @@
 #include <iostream>
 #include <string>
 using namespace std;
-template <class T>
-void MyForeach(T *begin, T *end, void(*p)(T&))
+template <typename T1, typename T2>
+void MyForeach(T1 *begin, T1 *end, T2 p)
 {
-	for (T *i = begin; i != end; ++i)
+	for (T1 *i = begin; i != end; ++i)
 	{
-		(*p)(*i);
+		p(*i);
 	}
 }
-template <class T>
-void MyForeach(T *begin, T *end, void(*p)(T))
-{
-	for (T *i = begin; i != end; ++i)
-	{
-		(*p)(*i);
-	}
-}
+
 void Print(string s)
 {
 	cout << s;

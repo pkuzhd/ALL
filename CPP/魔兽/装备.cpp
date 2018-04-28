@@ -2,7 +2,10 @@
 #include <cstdio>
 #include <string>
 #include <vector>
+<<<<<<< HEAD
 #include <iomanip>
+=======
+>>>>>>> 7e1b36017249f49b1884f4167cb5a9470c46f683
 
 using namespace std;
 
@@ -15,12 +18,17 @@ const int BLUE = 1;
 
 class warrior
 {
+<<<<<<< HEAD
 protected:
 	int loyalty;                     // 忠诚度
 	int number;                      // 编号
 	int color;
 	string weapon[2];                   // 武器
 	float morale;                    // 士气
+=======
+private:
+
+>>>>>>> 7e1b36017249f49b1884f4167cb5a9470c46f683
 public:
 	static int hp_dragon;
 	static int hp_ninja;
@@ -29,6 +37,7 @@ public:
 	static int hp_wolf;
 	static int hp[5];
 	static string name[5];
+<<<<<<< HEAD
 	static string weapon_name[3];
 	
 	virtual string getName() = 0;
@@ -116,10 +125,19 @@ public:
 		return "wolf";
 	}
 };
+=======
+	friend class army;
+	virtual string getName() = 0;
+};
+
+int warrior::hp[5] = { 0 };
+string warrior::name[5] = { "dragon","ninja","iceman","lion","wolf" };
+>>>>>>> 7e1b36017249f49b1884f4167cb5a9470c46f683
 
 class army
 {
 private:
+<<<<<<< HEAD
 	int color;                    // 阵营颜色
 	int num_warrior[5];           // 战士数量
 	int num_total;                // 已经造的战士数量
@@ -129,10 +147,27 @@ private:
 	bool flag[5];                 // 是否能造战士
 	int tick;                     // 下一个制造的战士编号
 	vector<warrior *> team;       // 战士们
+=======
+	int num[5];
+	int color;
+	int num_dragon;
+	int num_ninja;
+	int num_iceman;
+	int num_lion;
+	int num_wolf;
+	int num_warrior[5];
+	int num_total;
+	int hp;
+	bool stop;
+	int order[5];
+	bool flag[5];
+	int tick;
+>>>>>>> 7e1b36017249f49b1884f4167cb5a9470c46f683
 public:
 	army(int _color, int _hp);
 	bool is_stop() { return stop; }
 	void create(int time);
+<<<<<<< HEAD
 	~army()
 	{
 		for (auto it = team.begin(); it != team.end(); ++it)
@@ -144,6 +179,8 @@ public:
 			}
 		}
 	}
+=======
+>>>>>>> 7e1b36017249f49b1884f4167cb5a9470c46f683
 };
 
 int main(int argc, const char *argv[])
@@ -207,14 +244,20 @@ void army::create(int time)
 		if (hp >= warrior::hp[order[tick]])
 		{
 			int type = order[tick];
+<<<<<<< HEAD
 			hp -= warrior::hp[type];
 			++num_warrior[type];
 			
+=======
+			hp -= warrior::hp[type]`
+			++num_warrior[type];
+>>>>>>> 7e1b36017249f49b1884f4167cb5a9470c46f683
 			tick = (tick + 1) % 5;
 			string temp = warrior::name[type];
 			cout << temp << " " << ++num_total << " born with strength " << warrior::hp[type] << ",";
 			cout << num_warrior[type] << " " << temp << " in " << (color == RED ? "red" : "blue") << " headquarter";
 			cout << endl;
+<<<<<<< HEAD
 			switch (type)
 			{
 			case 0: // dragon
@@ -237,10 +280,18 @@ void army::create(int time)
 				team.push_back(new wolf(num_total, color));
 				break;
 			}
+=======
+>>>>>>> 7e1b36017249f49b1884f4167cb5a9470c46f683
 			return;
 		}
 		tick = (tick + 1) % 5;
 	}
 	stop = true;
+<<<<<<< HEAD
 		cout << "headquarter stops making warriors" << endl;
 }
+=======
+	cout << "headquarter stops making warriors" << endl;
+}
+5
+>>>>>>> 7e1b36017249f49b1884f4167cb5a9470c46f683

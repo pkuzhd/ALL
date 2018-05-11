@@ -65,7 +65,15 @@ weapon *get_weapon(int kind, warrior *host)
 	{
 	case ARROW:return new arrow(host);
 	case BOMB: return new bomb(host);
-	case SWORD:return new sword(host);
+	case SWORD:
+		sword *t_sword = new sword(host);
+		if (t_sword->force == 0)
+		{
+			delete t_sword;
+			return NULL;
+		}
+		else
+			return t_sword;
 	}
 	throw 1;
 }
@@ -234,7 +242,7 @@ public:
 				(*it)->report(time);
 			}
 		}
-		for (int j = 1; j <= city::number; ++j)
+		for (int j = 0; j <= city::number + 1; ++j)
 		{
 			vector<warrior *>::iterator it;
 			for (it = citys[j].warriors[BLUE].begin(); it != citys[j].warriors[BLUE].end(); ++it)
@@ -268,7 +276,8 @@ public:
 	}
 	void yell(int time)
 	{
-		printf("%03d:40 %s dragon %d yelled in city %d\n", time, color_name[parmy->color].c_str(), number, city_num);
+		printf("%03d:40 %s dragon %d yelled in city %d\n",
+			time, color_name[parmy->color].c_str(), number, city_num);
 	}
 	~dragon()
 	{
@@ -421,8 +430,8 @@ int arrow::force;
 
 int main(int argc, const char *argv[])
 {
-	freopen("C:\\Users\\pkuzh\\Desktop\\in", "r", stdin);
-	freopen("C:\\Users\\pkuzh\\Desktop\\w3\\my_out", "w", stdout);
+	//freopen("C:\\Users\\pkuzhd\\Desktop\\w3\\in", "r", stdin);
+	//freopen("C:\\Users\\pkuzhd\\Desktop\\w3\\my_out", "w", stdout);
 	int t;
 	cin >> t;
 	for (int i = 1; i <= t; ++i)
@@ -783,7 +792,7 @@ void warrior::fight(int time)
 			int attack_color = (city::citys[i].color != WHITE) ? city::citys[i].color : (i % 2 ? RED : BLUE);
 			if (t_warrior[RED]->hp_left <= 0 && t_warrior[BLUE]->hp_left <= 0) // 都被箭射死
 			{
-				city::citys[i].last_winner = WHITE;
+				//city::citys[i].last_winner = WHITE; // 不算做战斗
 				city::citys[i].warriors[RED].clear();
 				city::citys[i].warriors[BLUE].clear();
 			}
@@ -816,13 +825,18 @@ void warrior::fight(int time)
 				if (city::citys[i].color != result)
 				{
 					if (city::citys[i].last_winner == result)
+					{
 						printf("%03d:40 %s flag raised in city %d\n",
 							time,
 							color_name[result].c_str(),
 							i);
+						city::citys[i].color = result;
+					}
 					else
 						city::citys[i].last_winner = result;
 				}
+				else
+					city::citys[i].last_winner = result;
 				if (t_warrior[result]->kind == WOLF)
 				{
 					for (int k = 0; k < 3; ++k)
@@ -842,7 +856,7 @@ void warrior::fight(int time)
 				t_warrior[1 - attack_color]->hp_left -=
 					(t_warrior[attack_color]->cur_force
 						+ (t_warrior[attack_color]->wp[SWORD] ? dynamic_cast<sword*>(t_warrior[attack_color]->wp[SWORD])->force : 0));
-				
+
 				printf("%03d:40 %s %s %d attacked %s %s %d in city %d with %d elements and force %d\n",
 					time,
 					color_name[attack_color].c_str(),
@@ -877,7 +891,7 @@ void warrior::fight(int time)
 						t_warrior[attack_color]->hp_left += hp_before[1 - attack_color];
 				}
 				else
-				{ 
+				{
 					if (t_warrior[1 - attack_color]->kind != NINJA)
 					{
 						t_warrior[attack_color]->hp_left -=
@@ -926,7 +940,7 @@ void warrior::fight(int time)
 						if (t_dragon)
 						{
 							t_dragon->morale -= 0.2f;
-							if (t_dragon->morale > 0.8)
+							if (t_dragon->morale > 0.8 && kk == attack_color)
 								t_dragon->yell(time);
 						}
 						if (t_lion)
@@ -961,13 +975,18 @@ void warrior::fight(int time)
 					if (city::citys[i].color != result)
 					{
 						if (city::citys[i].last_winner == result)
+						{
 							printf("%03d:40 %s flag raised in city %d\n",
 								time,
 								color_name[result].c_str(),
 								i);
+							city::citys[i].color = result;
+						}
 						else
 							city::citys[i].last_winner = result;
 					}
+					else
+						city::citys[i].last_winner = result;
 					if (t_warrior[result]->kind == WOLF)
 					{
 						for (int k = 0; k < 3; ++k)
@@ -982,6 +1001,12 @@ void warrior::fight(int time)
 					city::citys[i].warriors[1 - result].clear();
 				}
 			}
+		}
+		else if (city::citys[i].warriors[RED].size() || city::citys[i].warriors[BLUE].size())
+		{
+			int dead = city::citys[i].warriors[RED].size() ? RED : BLUE;
+			if (city::citys[i].warriors[dead][0]->hp_left <= 0)
+				city::citys[i].warriors[dead].clear();
 		}
 	}
 	army::armys[RED]->hp += add_hp[RED];

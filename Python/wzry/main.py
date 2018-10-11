@@ -75,7 +75,7 @@ def is_eq(img1, img2):
     h2 = img2.histogram()
     result = math.sqrt(reduce(operator.add, list(map(lambda a,b: (a-b)**2, h1, h2)))/len(h1) )
     print(result)
-    return result < 30.0
+    return result < 40.0
 def is_replay(img):
     return is_eq(img_replay_button  , img.crop(replay_button))
 def is_play(img):

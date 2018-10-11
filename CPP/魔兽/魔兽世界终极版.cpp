@@ -66,7 +66,7 @@ weapon *get_weapon(int kind, warrior *host)
 	case ARROW:return new arrow(host);
 	case BOMB: return new bomb(host);
 	case SWORD:
-		sword *t_sword = new sword(host);
+		sword * t_sword = new sword(host);
 		if (t_sword->force == 0)
 		{
 			delete t_sword;
@@ -80,7 +80,7 @@ weapon *get_weapon(int kind, warrior *host)
 class warrior // 战士基类
 {
 protected:
-	army *parmy;                     // 阵营
+	army * parmy;                     // 阵营
 	int color;                       // 阵营颜色
 	int number;                      // 编号
 	int hp_left;                     // 剩余生命值
@@ -250,7 +250,7 @@ public:
 				(*it)->report(time);
 			}
 		}
-		
+
 	}
 };
 int city::number;
@@ -298,7 +298,7 @@ public:
 		wp[num % 3] = get_weapon(num % 3, this);
 		wp[(num + 1) % 3] = get_weapon((num + 1) % 3, this);
 		hp_left = warrior::hp[NINJA];
-		
+
 	}
 	string getName()
 	{
@@ -566,7 +566,7 @@ warrior::warrior(int num, army &_army, int kind)
 	cur_force = force[kind];
 	for (int i = 0; i < 3; ++i)
 	{
-			wp[i] = NULL;
+		wp[i] = NULL;
 	}
 }
 void warrior::born(int time, int kind)
@@ -652,7 +652,7 @@ void warrior::earn(int time)
 			}
 		}
 	}
-	
+
 }
 void warrior::shot(int time)
 {

@@ -58,7 +58,7 @@ int main(int argc, char const *argv[])
 						stackNum.push(0);
 					}
 				case '+':
-					if (!stackOp.empty() && stackOp.top()!='(')
+					while (!stackOp.empty() && stackOp.top()!='(')
 					{
 						char tempOp = stackOp.top();
 						stackOp.pop();
@@ -72,7 +72,7 @@ int main(int argc, char const *argv[])
 					break;
 				case '*':
 				case '/':
-					if (!stackOp.empty() && stackOp.top()!='(' && stackOp.top()!='+' && stackOp.top()!='-')
+					while (!stackOp.empty() && stackOp.top()!='(' && stackOp.top()!='+' && stackOp.top()!='-')
 					{
 						char tempOp = stackOp.top();
 						stackOp.pop();
